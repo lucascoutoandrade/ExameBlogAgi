@@ -1,41 +1,45 @@
 package testes;
 
 import org.junit.Assert;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 import org.openqa.selenium.By;
 
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+
 public class BlogAgiTest extends BaseTest {
-
+	
 	@Test
-	public void deveDigitarDadosValidos() throws InterruptedException {
+	public void a_deveDigitarDadosValidos() throws InterruptedException {
 
-		// Preencher campo de input pesquisa
+		// Preenche campo de input pesquisa
 		driver.findElement(By.cssSelector("div.desktop-search > form > label > input")).sendKeys("pix");
-		Thread.sleep(2000);
+		aguardaByVisibilidadeElemento(By.cssSelector("div.desktop-search > form > input"));
 
-		// Acionar botão pesquisar
+		// Aciona botão pesquisar
 		driver.findElement(By.cssSelector("div.desktop-search > form > input")).click();
-		Thread.sleep(2000);
-
-		// validar retorno
+		
+		// Obtem retorno
+		aguardaByVisibilidadeElemento(By.cssSelector("#primary > header > h1"));
 		textObtido = driver.findElement(By.cssSelector("#primary > header > h1")).getText();
-
+		
 		// Valida se pesquisa retorna dados de acordo com o parametro informado
 		Assert.assertEquals("Resultados da busca por: pix", textObtido);
 	}
 
 	@Test
-	public void deveDigitarDadosInvalidos() throws InterruptedException {
+	public void b_deveDigitarDadosInvalidos() throws InterruptedException {
 
-		// Preencher campo de input pesquisa
+		// Preenche campo de input pesquisa
 		driver.findElement(By.cssSelector("div.desktop-search > form > label > input")).sendKeys("dasdadada");
-		Thread.sleep(2000);
+		aguardaByVisibilidadeElemento(By.cssSelector("div.desktop-search > form > input"));
 
-		// Acionar botão pesquisar
+		// Aciona botão pesquisar
 		driver.findElement(By.cssSelector("div.desktop-search > form > input")).click();
-		Thread.sleep(2000);
 
-		// TO DO //validar retorno
+		// Obtem retorno
+		aguardaByVisibilidadeElemento(By.cssSelector("#primary > section > header > h1"));
 		textObtido = driver.findElement(By.cssSelector("#primary > section > header > h1")).getText();
 
 		// Valida se pesquisa retorna dados de acordo com o parametro informado

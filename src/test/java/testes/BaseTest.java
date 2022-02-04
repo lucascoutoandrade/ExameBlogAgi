@@ -19,11 +19,15 @@ import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class BaseTest {
 	
 	static WebDriver driver;
 	static String textObtido;
+	
+	WebDriverWait wait = new WebDriverWait(driver, 15);
 	
 	 @Rule
 	 public TestName name= new TestName();
@@ -77,6 +81,12 @@ public class BaseTest {
 		driver.close();
 		System.out.println("Fim");
 
+	}
+	
+	public void aguardaByVisibilidadeElemento(By by) {
+		//Espera condicional a visibilidade do elemento localizado
+		wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(by));
+		
 	}
 
 }
