@@ -2,9 +2,12 @@ package testes;
 
 import java.util.concurrent.TimeUnit;
 
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.junit.AfterClass;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -12,8 +15,9 @@ import org.openqa.selenium.chrome.ChromeOptions;
 public class BlogAgiTest {
 
 	static WebDriver driver;
+	static String textObtido;
 
-	@BeforeAll
+	@BeforeClass
 	public static void setupTest() {
 
 		// Seta path do driver executavel
@@ -29,20 +33,59 @@ public class BlogAgiTest {
 
 	}
 
-	@Test
-	public void acessarBlogAgi() {
+	@Before
+	public void antesCadaTest() throws InterruptedException {
 
 		// ACessa URL do blog AGI
 		driver.get("https://blogdoagi.com.br/");
+		Thread.sleep(2000);
+		// Clicar na lupa
+		driver.findElement(By.xpath("//*[@id = 'search-open']")).click();
+		Thread.sleep(2000);
 
 	}
 
-	@AfterAll
-	public void finaliza() {
+	@Test
+	public void deveDigitarDadosValidos() throws InterruptedException {
+
+		// Preencher campo de input pesquisa
+		driver.findElement(By.cssSelector("div.desktop-search > form > label > input")).sendKeys("pix");
+		Thread.sleep(2000);
+
+		// Acionar botão pesquisar
+		driver.findElement(By.cssSelector("div.desktop-search > form > input")).click();
+		Thread.sleep(2000);
+
+		// validar retorno
+		textObtido = driver.findElement(By.cssSelector("#primary > header > h1")).getText();
+
+		// Valida se pesquisa retorna dados de acordo com o parametro informado
+		Assert.assertEquals("Resultados da busca por: pix", textObtido);
+	}
+
+	@Test
+	public void deveDigitarDadosInvalidosValidarRetorno() throws InterruptedException {
+
+		// Preencher campo de input pesquisa
+		driver.findElement(By.cssSelector("div.desktop-search > form > label > input")).sendKeys("dasdadada");
+		Thread.sleep(2000);
+
+		// Acionar botão pesquisar
+		driver.findElement(By.cssSelector("div.desktop-search > form > input")).click();
+		Thread.sleep(2000);
+
+		// TO DO //validar retorno
+		textObtido = driver.findElement(By.cssSelector("#primary > section > header > h1")).getText();
+
+		// Valida se pesquisa retorna dados de acordo com o parametro informado
+		Assert.assertEquals("Nenhum resultado", textObtido);
+	}
+
+	@AfterClass
+	public static void finaliza() {
 
 		// Finaliza o driver
 		driver.close();
-
 		System.out.println("Fim");
 
 	}
