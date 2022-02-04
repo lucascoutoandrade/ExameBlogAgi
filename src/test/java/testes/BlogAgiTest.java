@@ -1,13 +1,19 @@
 package testes;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.commons.io.FileUtils;
+import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openqa.selenium.By;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -79,6 +85,19 @@ public class BlogAgiTest {
 
 		// Valida se pesquisa retorna dados de acordo com o parametro informado
 		Assert.assertEquals("Nenhum resultado", textObtido);
+	}
+	
+	@After
+	public void depoisCadaTest() throws IOException {
+		//Converte webdriver para tirar print
+		TakesScreenshot scrShot =((TakesScreenshot)driver);
+		//Cria arquivo de imagem
+		 File srcFile = scrShot.getScreenshotAs(OutputType.FILE);
+		 //Copia print para pasta abaixo
+		 FileUtils.copyFile(srcFile, new File("screenshots/teste.png"));
+		 
+		 
+		
 	}
 
 	@AfterClass
