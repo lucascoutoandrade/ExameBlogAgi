@@ -11,6 +11,8 @@ import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.Rule;
+import org.junit.rules.TestName;
 import org.openqa.selenium.By;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
@@ -22,6 +24,9 @@ public class BaseTest {
 	
 	static WebDriver driver;
 	static String textObtido;
+	
+	 @Rule
+	 public TestName name= new TestName();
 
 	@BeforeClass
 	public static void setupTest() {
@@ -61,7 +66,7 @@ public class BaseTest {
 		//Cria arquivo de imagem
 		 File srcFile = scrShot.getScreenshotAs(OutputType.FILE);
 		 //Copia print para pasta abaixo
-		 FileUtils.copyFile(srcFile, new File("screenshots/teste_"+timeStamp+".png"));
+		 FileUtils.copyFile(srcFile, new File("screenshots/"+name.getMethodName()+"_"+timeStamp+".png"));
 		 
 	}
 

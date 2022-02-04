@@ -25,7 +25,7 @@ public class BlogAgiTest extends BaseTest {
 	}
 
 	@Test
-	public void deveDigitarDadosInvalidosValidarRetorno() throws InterruptedException {
+	public void deveDigitarDadosInvalidos() throws InterruptedException {
 
 		// Preencher campo de input pesquisa
 		driver.findElement(By.cssSelector("div.desktop-search > form > label > input")).sendKeys("dasdadada");
