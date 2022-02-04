@@ -79,7 +79,6 @@ public class BaseTest {
 
 		// Finaliza o driver
 		driver.close();
-		System.out.println("Fim");
 
 	}
 	
